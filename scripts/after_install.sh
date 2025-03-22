@@ -7,30 +7,13 @@ cd /var/www/react-app || {
     exit 1
 }
 
-# Check for package.json
-if [ ! -f "package.json" ]; then
-    echo "❌ package.json not found! Deployment failed."
-    exit 1
-fi
-
-# Install dependencies
-echo "📦 Installing dependencies..."
-npm install --omit=dev --prefer-offline --no-audit --no-fund --no-progress || {
-    echo "❌ npm install failed! Exiting."
-    exit 1
-}
-
-# Build the app
-echo "⚡ Building the application..."
-npm run build || {
-    echo "❌ Build process failed! Exiting."
-    exit 1
-}
-
 # Ensure the dist directory exists
 if [ ! -d "dist" ]; then
-    echo "❌ dist directory not found after build. Exiting."
+    echo "❌ dist directory not found. Deployment failed."
     exit 1
 fi
+
+echo "🔄 Restarting the server..."
+pm2 restart all || pm2 start npm --name "react-app" -- start
 
 echo "✅ Deployment successful!"
