@@ -2,7 +2,11 @@ version: 0.0
 os: linux
 
 files:
-  - source: /
+  - source: dist
+    destination: /var/www/react-app
+  - source: package.json
+    destination: /var/www/react-app
+  - source: package-lock.json
     destination: /var/www/react-app
 
 permissions:
