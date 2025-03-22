@@ -1,36 +1,25 @@
 #!/bin/bash
-
-# Stop execution on any error
-set -e  
-
 echo "🚀 Running ApplicationStart script for React Vite app..."
 
-# Navigate to the application directory
-cd /var/www/react-app
+echo "⚡ Installing serve..."
+npm install -g serve || {
+    echo "❌ Failed to install serve! Exiting."
+    exit 1
+}
 
-# Ensure correct ownership
-sudo chown -R ec2-user:ec2-user /var/www/react-app
+echo "⚡ Installing PM2..."
+npm install -g pm2 || {
+    echo "❌ Failed to install PM2! Exiting."
+    exit 1
+}
 
-# Install serve if not installed
-if ! command -v serve &> /dev/null
-then
-    echo "⚡ Installing serve..."
-    npm install -g serve
-fi
-
-# Stop any existing instance of the app
 echo "🛑 Stopping existing Vite app (if running)..."
-pm2 stop vite-app || true
-pm2 delete vite-app || true
+pm2 stop all || echo "⚠️ No existing PM2 process found to stop."
 
-# Start the app with serve
 echo "🚀 Starting Vite app..."
-pm2 start serve --name "vite-app" -- -s -l 3000
+pm2 start "serve -s dist" --name "vite-app" || {
+    echo "❌ Failed to start Vite app with PM2! Exiting."
+    exit 1
+}
 
-# Save the PM2 process list
-pm2 save
-
-# Ensure PM2 starts on system reboot
-pm2 startup
-
-echo "✅ ApplicationStart script completed."
+echo "✅ Application started successfully!"
