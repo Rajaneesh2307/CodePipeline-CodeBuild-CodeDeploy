@@ -1,22 +1,10 @@
 #!/bin/bash
-
-# Stop execution on any error
-set -e  
-
 echo "🚀 Running AfterInstall script for React Vite app..."
 
-# Navigate to the application directory
-cd /var/www/react-app
+# Navigate to the app directory
+cd /var/www/react-app || exit
 
-# Ensure correct ownership
-sudo chown -R ec2-user:ec2-user /var/www/react-app
-
-# Install project dependencies
 echo "📦 Installing dependencies..."
-npm install --production  
+npm install --omit=dev --prefer-offline --no-audit --no-fund --no-progress
 
-# Ensure correct permissions
-echo "🔧 Setting permissions..."
-sudo chmod -R 755 /var/www/react-app
-
-echo "✅ AfterInstall script completed."
+echo "✅ Dependencies installed. Ready to serve the app!"
