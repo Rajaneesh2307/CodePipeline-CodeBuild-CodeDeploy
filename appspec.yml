@@ -2,7 +2,7 @@ version: 0.0
 os: linux
 
 files:
-  - source: / # ✅ Deploy everything (including package.json)
+  - source: /
     destination: /var/www/react-app
 
 permissions:
