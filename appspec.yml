@@ -4,10 +4,6 @@ os: linux
 files:
   - source: dist
     destination: /var/www/react-app
-  - source: package.json
-    destination: /var/www/react-app
-  - source: package-lock.json
-    destination: /var/www/react-app
 
 permissions:
   - object: /var/www/react-app
