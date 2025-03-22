@@ -2,13 +2,7 @@ version: 0.0
 os: linux
 
 files:
-  - source: dist # ✅ Deploy built Vite files
-    destination: /var/www/react-app/dist
-
-  - source: package.json # ✅ Deploy package.json (needed for npm install)
-    destination: /var/www/react-app
-
-  - source: package-lock.json # ✅ Ensures correct dependency versions
+  - source: / # ✅ Deploy everything (including package.json)
     destination: /var/www/react-app
 
 permissions:
