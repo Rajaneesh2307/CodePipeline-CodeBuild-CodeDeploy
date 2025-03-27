@@ -16,11 +16,11 @@ then
     sudo yum install -y nodejs
 fi
 
-# Install PM2 (if not installed)
+# Install PM2 globally using sudo to avoid permission issues
 if ! command -v pm2 &> /dev/null
 then
     echo "⚡ Installing PM2..."
-    npm install -g pm2
+    sudo npm install -g pm2
 fi
 
 # Remove old application files
